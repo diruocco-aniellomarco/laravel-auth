@@ -40,9 +40,10 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+        //validazione
         $data = $this->validation($request->all());
         $this->validation($data);
-        
+        // $data = $request->all(); senza la validazione
 
         $project = new Project();
         $project->fill($data);
@@ -82,7 +83,9 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
+        //validazione
         $data = $this->validation($request->all(), $project->id);
+        // $data = $request->all(); senza la validazione
         
         $project->update($data);
         return redirect()->route('admin.projects.show', $project);
