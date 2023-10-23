@@ -33,6 +33,7 @@
             </div>  
         </div>
         
+        <a href="{{ route('admin.projects.edit', $project) }}" class="btn btn-primary my-3">Modifica</a>
     </div>
     
 @endsection
