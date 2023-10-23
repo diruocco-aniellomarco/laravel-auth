@@ -6,7 +6,7 @@
 
     <div class="container">
         
-        <a href="{{ route('admin.projects.index') }}" class="btn btn-outline-info my-3">Torna alla lista</a>
+        
 
         <form class="row g-3 mt-4" action="{{ route('admin.projects.update', $project )}}" method="POST">
             {{-- token da inserire per farlo leggere a laravel (questioni di sicurezza) --}}

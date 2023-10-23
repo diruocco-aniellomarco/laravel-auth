@@ -9,7 +9,7 @@
 
     <div class="container">
         
-        <a class="btn btn-primary mb-4 text-end" href="{{ route('admin.projects.create')}}">Aggiungi un progetto</a>
+        <a class="btn btn-primary my-4 text-end" href="{{ route('admin.projects.create')}}">Aggiungi un progetto</a>
         
         <table class="table">
             <thead>
@@ -35,9 +35,23 @@
                     <td>{{$project->created_at}}</td>
                     <td>{{$project->updated_at}}</td>
                     <td>
-                        <a href="{{ route('admin.projects.show', $project)}}">
-                            <i class="fa-solid fa-circle-info fa-xl"></i>
-                        </a>
+                        <div class="d-flex">
+                            <a href="{{ route('admin.projects.show', $project)}}">
+                                {{-- info-show --}}
+                                <i class="fa-solid fa-circle-info fa-lg"></i>
+                            </a>
+                            <a href="{{ route('admin.projects.edit', $project) }}" class="mx-3">
+                                {{-- modifica --}}
+                                <i class="fa-regular fa-pen-to-square fa-lg"></i>
+                            </a>
+                                {{-- cancella --}}
+                            <form action="{{ route('admin.projects.destroy', $project)}}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button><i class="fa-solid fa-trash-can fa-lg text-danger button_delete_index"></i></button>
+                              </form>
+
+                        </div>
                     </td>
                   </tr>
                 @empty

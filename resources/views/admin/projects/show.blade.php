@@ -32,8 +32,14 @@
                 <p>{{ $project->description }}</p>
             </div>  
         </div>
-        
-        <a href="{{ route('admin.projects.edit', $project) }}" class="btn btn-primary my-3">Modifica</a>
+        <div class="d-flex mt-3">
+            <a href="{{ route('admin.projects.edit', $project) }}" class="btn btn-primary">Modifica</a>
+            <form action="{{ route('admin.projects.destroy', $project)}}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button class="btn btn-danger mx-3">ELIMINA</button>
+            </form>
+        </div>  
     </div>
     
 @endsection
