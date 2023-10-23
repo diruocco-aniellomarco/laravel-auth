@@ -6,6 +6,18 @@
 
     <div class="container">
         
+        <h1 class="my-3">Modifica questo progetto</h1>
+
+        @if ($errors->any())
+        <div class="alert alert-danger">
+            <h4>Correggi i seguenti errori per proseguire:</h4>
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+         @endif
         
 
         <form class="row g-3 mt-4" action="{{ route('admin.projects.update', $project )}}" method="POST">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 use App\Models\Project;
 
@@ -39,7 +40,8 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->all();
+        $data = $this->validation($request->all());
+        $this->validation($data);
         
 
         $project = new Project();
@@ -80,7 +82,7 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        $data = $request->all();
+        $data = $this->validation($request->all(), $project->id);
         
         $project->update($data);
         return redirect()->route('admin.projects.show', $project);
@@ -96,5 +98,34 @@ class ProjectController extends Controller
     {
         $project->delete();
         return redirect()->route('admin.projects.index');
+    }
+
+    private function validation($data, $id = null){
+
+        $validator = Validator::make(
+            $data,
+            [
+                'name'=> 'required|string',
+                'description'=> 'required|string|max: 500',
+                'link'=> 'required|string',
+                'slug'=> 'required|string',                
+            ],
+            [
+                'name.required'=> 'Il nome è obbligatorio',
+                'name.string'=> 'Il nome deve essere una stringa',
+                
+                'description.required'=> 'La descrizione è obbligatoria',
+                'description.string'=> 'La descrizione deve essere una stringa',
+                'description.max'=> 'La descrizione deve essere massimo di 500 caratteri',
+                
+                'link.required'=> 'Il link è obbligatorio',
+                'link.string'=> 'Il link deve essere una stringa',
+                
+                'slug.required'=> 'Lo slug è obbligatorio',
+                'slug.string'=> 'Lo slug deve essere una stringa',
+                
+            ]
+        )->validate();
+        return $validator;
     }
 }

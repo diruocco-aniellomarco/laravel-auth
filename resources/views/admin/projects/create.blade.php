@@ -8,6 +8,18 @@
         
         <a href="{{ route('admin.projects.index') }}" class="btn btn-outline-info my-3">Torna alla lista</a>
 
+        <h1 class="my-3">Aggiungi un nuovo progetto</h1>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <h4>Correggi i seguenti errori per proseguire:</h4>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <form class="row g-3 mt-4" action="{{ route('admin.projects.store')}}" method="POST">
             {{-- token da inserire per farlo leggere a laravel (questioni di sicurezza) --}}
             @csrf
