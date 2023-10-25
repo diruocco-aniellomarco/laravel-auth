@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreProjectRequest;
+use App\Http\Requests\UpdateProjectRequest;
 
 //attivare se crei una validazione function 
 // use Illuminate\Support\Facades\Validator;
@@ -88,11 +89,13 @@ class ProjectController extends Controller
      * @param  int  $id
      * *@return \Illuminate\Http\Response
      */
-    public function update(Request $request, Project $project)
+    public function update(UpdateProjectRequest $request, Project $project)
     {
         //validazione
-        $data = $this->validation($request->all(), $project->id);
+        // $data = $this->validation($request->all(), $project->id);
         // $data = $request->all(); senza la validazione
+
+        $data = $request->validated();
         
         $project->update($data);
         return redirect()->route('admin.projects.show', $project);
