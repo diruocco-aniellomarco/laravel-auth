@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\StoreProjectRequest;
+
+//attivare se crei una validazione function 
+// use Illuminate\Support\Facades\Validator;
 
 use App\Models\Project;
 
@@ -38,12 +41,16 @@ class ProjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * *@return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreProjectRequest $request)
     {
-        //validazione
-        $data = $this->validation($request->all());
-        $this->validation($data);
-        // $data = $request->all(); senza la validazione
+        //validazione con funzione
+        // $data = $this->validation($request->all());
+        // $this->validation($data);
+
+        // senza la validazione
+        // $data = $request->all(); 
+
+        $data = $request->validated();
 
         $project = new Project();
         $project->fill($data);
@@ -103,32 +110,32 @@ class ProjectController extends Controller
         return redirect()->route('admin.projects.index');
     }
 
-    private function validation($data, $id = null){
+    // private function validation($data, $id = null){
 
-        $validator = Validator::make(
-            $data,
-            [
-                'name'=> 'required|string',
-                'description'=> 'required|string|max: 500',
-                'link'=> 'required|string',
-                'slug'=> 'required|string',                
-            ],
-            [
-                'name.required'=> 'Il nome è obbligatorio',
-                'name.string'=> 'Il nome deve essere una stringa',
+    //     $validator = Validator::make(
+    //         $data,
+    //         [
+    //             'name'=> 'required|string',
+    //             'description'=> 'required|string|max: 500',
+    //             'link'=> 'required|string',
+    //             'slug'=> 'required|string',                
+    //         ],
+    //         [
+    //             'name.required'=> 'Il nome è obbligatorio',
+    //             'name.string'=> 'Il nome deve essere una stringa',
                 
-                'description.required'=> 'La descrizione è obbligatoria',
-                'description.string'=> 'La descrizione deve essere una stringa',
-                'description.max'=> 'La descrizione deve essere massimo di 500 caratteri',
+    //             'description.required'=> 'La descrizione è obbligatoria',
+    //             'description.string'=> 'La descrizione deve essere una stringa',
+    //             'description.max'=> 'La descrizione deve essere massimo di 500 caratteri',
                 
-                'link.required'=> 'Il link è obbligatorio',
-                'link.string'=> 'Il link deve essere una stringa',
+    //             'link.required'=> 'Il link è obbligatorio',
+    //             'link.string'=> 'Il link deve essere una stringa',
                 
-                'slug.required'=> 'Lo slug è obbligatorio',
-                'slug.string'=> 'Lo slug deve essere una stringa',
+    //             'slug.required'=> 'Lo slug è obbligatorio',
+    //             'slug.string'=> 'Lo slug deve essere una stringa',
                 
-            ]
-        )->validate();
-        return $validator;
-    }
+    //         ]
+    //     )->validate();
+    //     return $validator;
+    // }
 }
